@@ -2,8 +2,7 @@
 import { ref, onMounted } from 'vue'
 import QRCode from 'qrcode'
 
-// TODO: replace with the PROVES Discord invite link
-const discordUrl = 'https://discord.gg/REPLACE_ME'
+const discordUrl = 'https://discord.gg/j9HCDdAe'
 const qr = ref('')
 
 onMounted(async () => {

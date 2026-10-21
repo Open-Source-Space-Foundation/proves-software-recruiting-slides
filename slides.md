@@ -324,7 +324,7 @@ Commands up · Events &amp; telemetry down
   <div>
     <h3>Join us</h3>
     <ul>
-      <li><strong>Software Meeting</strong>: Thursdays at 9pm on Discord (scan the QR code)</li>
+      <li><strong>Software Meeting</strong>: Thursdays at 9pm on <a href="https://discord.gg/j9HCDdAe">Discord</a></li>
       <li><a href="https://github.com/Open-Source-Space-Foundation/proves-core-reference">PROVES flight software (proves-core-reference)</a></li>
     </ul>
     <h3 class="mt-4">Learn F´</h3>

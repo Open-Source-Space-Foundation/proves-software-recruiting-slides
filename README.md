@@ -8,6 +8,6 @@ To start the slide show:
 - Run `npm install`
 - Run `npm run dev`
 
-Edit [slides.md](./slides.md) to see the changes. The Discord bar shown on every slide lives in [global-bottom.vue](./global-bottom.vue); set the invite link there.
+Edit [slides.md](./slides.md) to see the changes. The Discord bar shown on every slide lives in [global-bottom.vue](./global-bottom.vue).
 
 To deploy updated slides to the GitHub site, push changes to `main`.
