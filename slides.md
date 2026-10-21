@@ -157,7 +157,7 @@ PicoTempManagerComponentAc.cpp   (generated)
 PicoTempManager.cpp              (you write)
 ```
 
-```text
+```fpp
 passive component PicoTempManager {
   sync command GetPicoTemperature()
   telemetry PicoTemperature: F64
@@ -197,7 +197,7 @@ class PicoTempManagerComponentBase {
   </div>
   <div>
 
-```text
+```fpp
 # PicoTempManager.fpp
 sync command GetPicoTemperature()
 
@@ -231,7 +231,7 @@ param FACE_TEMP_UPPER_THRESHOLD: F64 default 60.0
   </div>
   <div>
 
-```text
+```fpp
 # ThermalManager.fpp
 event TemperatureAboveThreshold(sensorId: U32, temp: F64) \
   severity warning low \
@@ -268,7 +268,7 @@ telemetry PicoTemperature: F64
   </div>
   <div>
 
-```text
+```fpp
 passive component PicoTempManager {
   sync input port picoTemperatureGet: picoTemperatureGet
 
@@ -309,7 +309,7 @@ passive component PicoTempManager {
   </div>
   <div>
 
-```text
+```fpp
 # PicoTempManager.fpp
 port picoTemperatureGet(ref condition: Fw.Success) -> F64
 sync input port picoTemperatureGet: picoTemperatureGet
@@ -346,7 +346,7 @@ output port picoTempGet: Drv.picoTemperatureGet
   </div>
   <div>
 
-```text
+```fpp
 instance thermalManager
 instance picoTempManager
 
@@ -380,7 +380,7 @@ connections thermalManager {
   </div>
   <div>
 
-```text
+```fpp
 connections RateGroups {
   timer.CycleOut -> rateGroupDriver.CycleIn
 

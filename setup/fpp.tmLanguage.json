@@ -1,0 +1,195 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "comment": "From https://github.com/phxe/fpptools (Apache-2.0, Copyright 2022 the fpptools contributors). Modified: float pattern matches multi-digit integer parts and is tried before integers.",
+  "name": "fpp",
+  "scopeName": "source.fpp",
+  "fileTypes": [
+    "fpp",
+    "fppi"
+  ],
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#operators"
+    },
+    {
+      "include": "#reserved-words"
+    },
+    {
+      "include": "#identifiers"
+    }
+  ],
+  "repository": {
+    "annotations": {
+      "patterns": [
+        {
+          "begin": "\\@<",
+          "end": "\\n",
+          "name": "annotation.line.post.fpp"
+        },
+        {
+          "begin": "\\@",
+          "end": "\\n",
+          "name": "annotation.line.pre.fpp"
+        }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "begin": "\\#",
+          "end": "\\n",
+          "name": "comment.line.number-sign.fpp"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "include": "#tripleStrings"
+        },
+        {
+          "include": "#doubleStrings"
+        }
+      ]
+    },
+    "tripleStrings": {
+      "name": "string.quoted.triple.fpp",
+      "begin": "\"\"\"",
+      "end": "\"\"\"",
+      "contentName": "meta.embedded.block.cpp",
+      "patterns": [
+        {
+          "include": "#string-escape-sequences"
+        },
+        {
+          "include": "source.cpp"
+        }
+      ]
+    },
+    "doubleStrings": {
+      "name": "string.quoted.double.fpp",
+      "begin": "\"",
+      "end": "(\")|((?:[^\\\\\\n])$)",
+      "patterns": [
+        {
+          "include": "#string-escape-sequences"
+        },
+        {
+          "match": "[^\"\n(\\\\.)]+",
+          "name": "string.quoted.double.block.fpp"
+        }
+      ]
+    },
+    "string-escape-sequences": {
+      "patterns": [
+        {
+          "name": "constant.character.escape.fpp",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.float.fpp",
+          "match": "\\b([0-9]+[eE][+-]?[0-9]+[fF]?|[0-9]+\\.[0-9]+([Ee][+-]?[0-9]+)?[fF]?)\\b"
+        },
+        {
+          "name": "constant.numeric.integer.fpp",
+          "match": "\\b(?<!\\$|\\.|[eE][+-])[0-9]+\\b(?!\\$|\\.)"
+        },
+        {
+          "name": "constant.numeric.hex.fpp",
+          "match": "\\b(?<!\\$)0(?:x|X)[0-9a-fA-F][0-9a-fA-F_]*?\\b(?!\\$)"
+        }
+      ]
+    },
+    "identifiers": {
+      "patterns": [
+        {
+          "name": "variable.fpp",
+          "match": "(\\$?[_a-zA-Z][_A-Za-z0-9]*)|([_a-zA-Z][_A-Za-z0-9]*)"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "include": "#annotations"
+        },
+        {
+          "name": "keyword.operator.assignment.fpp",
+          "match": "="
+        },
+        {
+          "name": "keyword.operator.arithmetic.fpp",
+          "match": "\\+|-(?!>)|\\*|/"
+        },
+        {
+          "name": "keyword.operator.control.fpp",
+          "match": "\\(|\\)|\\[|\\]|\\{|\\}|,|:|;|\\\\"
+        },
+        {
+          "name": "keyword.operator.connection.fpp",
+          "match": "->"
+        },
+        {
+          "name": "keyword.operator.dot.fpp",
+          "match": "\\."
+        }
+      ]
+    },
+    "reserved-words": {
+      "patterns": [
+        {
+          "include": "#types"
+        },
+        {
+          "name": "constant.language.boolean.fpp",
+          "match": "\\b(?<![$])(true|false)\\b"
+        },
+        {
+          "name": "keyword.control.external.fpp",
+          "match": "\\b(?<![$])(import|include|locate)\\b"
+        },
+        {
+          "name": "keyword.other.fpp",
+          "match": "\\b(?<![$])(type|instance|id|opcode|port|command|phase|queue|stack|topology|param|module|component|connections|orange|yellow|red|match|throttle|cpu|severity|format|activity|warning|diagnostic|fatal|serial|async|guarded|sync|command|event|param|telemetry|text|time|assert|block|drop|at|get|set|save|health|active|passive|queued|private|base|internal|priority|ref|default|recv|reg|resp|input|output|high|low|on|with|size|update|always|change)\\b"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "support.type.primitive.fpp",
+          "match": "\\b(?<![$])(constant|string|bool|array)\\b"
+        },
+        {
+          "name": "support.type.primitive.integer.unsigned.fpp",
+          "match": "\\b(?<![$])(U16|U32|U64|U8)\\b"
+        },
+        {
+          "name": "support.type.primitive.integer.signed.fpp",
+          "match": "\\b(?<![$])(I16|I32|I64|I8)\\b"
+        },
+        {
+          "name": "support.type.primitive.float.fpp",
+          "match": "\\b(?<![$])(F32|F64)\\b"
+        },
+        {
+          "name": "storage.type.object.fpp",
+          "match": "\\b(?<![$])(enum|struct)\\b"
+        }
+      ]
+    }
+  }
+}
