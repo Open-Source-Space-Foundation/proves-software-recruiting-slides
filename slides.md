@@ -86,12 +86,12 @@ Write flight software for real spacecraft with F´
 <div class="grid grid-cols-2 gap-4">
   <div>
     <ul>
-      <li><strong>PROVES Five</strong>: 4 satellites deployed from the ISS on <strong>July 2, 2026</strong>, running F´ flight software written at TXST</li>
+      <li><strong>PROVES Five</strong>: 4 satellites deployed from the ISS on <strong>July 2, 2026</strong>, running PROVES F´ flight software</li>
       <li>Operated by <strong>Columbia</strong>, <strong>UC Santa Cruz</strong>, <strong>Northeastern</strong> and <strong>Harvard</strong>; platform by Cal Poly Pomona's <strong>Bronco Space</strong></li>
       <li><strong>PROVES-Maia</strong>: TXST's first satellite, launched <strong>October 13, 2026</strong> on a Falcon 9 (CRS-35)</li>
     </ul>
     <div class="mt-4 text-sm">
-      <a href="https://news.txst.edu/research-and-innovation/2026/txst-developed-flight-software-satellites.html">TXST-developed flight software powers satellites deployed from the ISS</a><br>
+      <a href="https://news.txst.edu/research-and-innovation/2026/txst-developed-flight-software-satellites.html">PROVES Five satellites deployed from the ISS</a><br>
       <a href="https://news.txst.edu/research-and-innovation/2026/txst-launches-first-satellite-into-space.html">TXST's first-ever satellite launches into space</a>
     </div>
   </div>
