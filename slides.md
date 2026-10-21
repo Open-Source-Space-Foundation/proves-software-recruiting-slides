@@ -110,6 +110,19 @@ Write flight software for real spacecraft with F´
 -->
 
 ---
+layout: center
+class: text-center
+---
+
+# 7 Minutes of Terror
+
+<Youtube id="Ki_Af_o9Q9s" width="720" height="405" />
+
+<!--
+- Play the video to get folks hyped.
+-->
+
+---
 
 # F´ (F Prime)
 
@@ -485,10 +498,4 @@ layout: center
 class: text-center
 ---
 
-# 7 Minutes of Terror
-
-<Youtube id="Ki_Af_o9Q9s" width="720" height="405" />
-
-<!--
-- Play the video to get folks hyped.
--->
+# Questions?
