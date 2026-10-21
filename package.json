@@ -1,0 +1,17 @@
+{
+  "name": "proves-software-recruiting-slides",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --open",
+    "export": "slidev export"
+  },
+  "dependencies": {
+    "@slidev/cli": "^52.11.3",
+    "@slidev/theme-default": "latest",
+    "slidev-theme-dracula": "^0.2.0",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.26"
+  }
+}
