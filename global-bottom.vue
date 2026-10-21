@@ -15,7 +15,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="absolute bottom-0 left-0 right-0 flex items-end justify-end gap-3 p-3 pointer-events-none">
+  <div class="absolute bottom-0 left-0 right-0 z-10 flex items-end justify-end gap-3 p-3 pointer-events-none">
     <div class="px-4 py-2 rounded-lg bg-black/70 text-white text-sm">
       Software Meeting · <strong>Thursdays 9pm</strong> on Discord
     </div>

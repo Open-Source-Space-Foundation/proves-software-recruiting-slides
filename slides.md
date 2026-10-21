@@ -1,6 +1,6 @@
 ---
 theme: dracula
-background: ./images/spacecraft_above_earth.avif
+background: /images/spacecraft_above_earth.avif
 title: PROVES Software – Flight Software with F Prime
 info: |
   Recruiting talk for the PROVES software team.
@@ -11,6 +11,8 @@ drawings:
 transition: slide-left
 mdc: true
 duration: 20min
+# Preload hints use raw ./images paths that 404 under the Pages base; the <img> tags load bundled copies instead
+preloadImages: false
 ---
 
 # PROVES Software
