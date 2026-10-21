@@ -135,7 +135,7 @@ Write flight software for real spacecraft with F´
 
 # FPP: The F´ Modeling Language
 
-<div class="grid grid-cols-2 gap-4">
+<div class="grid grid-cols-[2fr_3fr] gap-4">
   <div>
     <ul>
       <li>You <strong>describe</strong> the system in <code>.fpp</code> files: components, ports, commands, telemetry, topologies</li>
@@ -148,19 +148,24 @@ Write flight software for real spacecraft with F´
   <div>
 
 ```text
-Thermal.fpp  ──fpp──▶  ThermalComponentAc.hpp/.cpp  (generated)
-                              ▲ inherits
-                       Thermal.hpp/.cpp           (you write)
+PicoTempManager.fpp
+  ▼ fpp
+PicoTempManagerComponentAc.cpp   (generated)
+  ▲ inherits
+PicoTempManager.cpp              (you write)
 ```
 
 ```cpp
-void Thermal::SET_HEATER_cmdHandler(
-    FwOpcodeType opCode, U32 cmdSeq, bool on) {
-  this->m_heaterOn = on;
+void PicoTempManager::GetPicoTemperature_cmdHandler(
+    FwOpcodeType opCode, U32 cmdSeq) {
+  F64 temperature = this->getPicoTemperature();
+  this->log_ACTIVITY_HI_PicoTemperature(temperature);
   this->cmdResponse_out(opCode, cmdSeq,
                         Fw::CmdResponse::OK);
 }
 ```
+
+<p class="mt-1 text-xs opacity-60">Simplified from: <a href="https://github.com/Open-Source-Space-Foundation/proves-core-reference/blob/main/PROVESFlightControllerReference/Components/Drv/PicoTempManager/PicoTempManager.cpp">PicoTempManager.cpp</a></p>
 
   </div>
 </div>
@@ -176,7 +181,7 @@ void Thermal::SET_HEATER_cmdHandler(
 
 # Input: Commands &amp; Parameters
 
-<div class="grid grid-cols-2 gap-4">
+<div class="grid grid-cols-[2fr_3fr] gap-4">
   <div>
     <ul>
       <li><strong>Commands</strong>: the ground tells the spacecraft to <em>do</em> something</li>
@@ -186,12 +191,15 @@ void Thermal::SET_HEATER_cmdHandler(
   <div>
 
 ```text
-@ Turn the heater on or off
-async command SET_HEATER(on: bool)
+# PicoTempManager.fpp
+sync command GetPicoTemperature()
 
-@ Temperature that triggers a warning
-param MAX_TEMP: F32 default 70.0
+# ThermalManager.fpp
+param FACE_TEMP_LOWER_THRESHOLD: F64 default -40.0
+param FACE_TEMP_UPPER_THRESHOLD: F64 default 60.0
 ```
+
+<p class="mt-1 text-xs opacity-60">Simplified from: <a href="https://github.com/Open-Source-Space-Foundation/proves-core-reference/blob/main/PROVESFlightControllerReference/Components/ThermalManager/ThermalManager.fpp">ThermalManager.fpp</a> · <a href="https://github.com/Open-Source-Space-Foundation/proves-core-reference/blob/main/PROVESFlightControllerReference/Components/Drv/PicoTempManager/PicoTempManager.fpp">PicoTempManager.fpp</a></p>
 
   </div>
 </div>
@@ -199,13 +207,15 @@ param MAX_TEMP: F32 default 70.0
 <!--
 - Commands are actions; parameters are configuration.
 - Both come up from the ground station.
+- GetPicoTemperature reads the RP2350's built-in die temperature on demand.
+- The thermal thresholds can be retuned from the ground without reflashing.
 -->
 
 ---
 
 # Output: Events &amp; Telemetry
 
-<div class="grid grid-cols-2 gap-4">
+<div class="grid grid-cols-[2fr_3fr] gap-4">
   <div>
     <ul>
       <li><strong>Events</strong>: something happened (logs with a severity)</li>
@@ -215,12 +225,16 @@ param MAX_TEMP: F32 default 70.0
   <div>
 
 ```text
-event OverTemp(temp: F32) \
-  severity warning high \
-  format "Over temperature: {} C"
+# ThermalManager.fpp
+event TemperatureAboveThreshold(sensorId: U32, temp: F64) \
+  severity warning low \
+  format "Sensor {} at {} °C"
 
-telemetry Temperature: F32
+# PicoTempManager.fpp
+telemetry PicoTemperature: F64
 ```
+
+<p class="mt-1 text-xs opacity-60">Simplified from: <a href="https://github.com/Open-Source-Space-Foundation/proves-core-reference/blob/main/PROVESFlightControllerReference/Components/ThermalManager/ThermalManager.fpp">ThermalManager.fpp</a> · <a href="https://github.com/Open-Source-Space-Foundation/proves-core-reference/blob/main/PROVESFlightControllerReference/Components/Drv/PicoTempManager/PicoTempManager.fpp">PicoTempManager.fpp</a></p>
 
   </div>
 </div>
@@ -228,13 +242,15 @@ telemetry Temperature: F32
 <!--
 - Events answer "what happened?"
 - Telemetry answers "what is it right now?"
+- ThermalManager fires an event when a face or battery sensor crosses a threshold.
+- PicoTempManager writes the Pico's temperature to telemetry every time it's read.
 -->
 
 ---
 
 # Components
 
-<div class="grid grid-cols-2 gap-4">
+<div class="grid grid-cols-[2fr_3fr] gap-4">
   <div>
     <ul>
       <li>One component per discrete service: <strong>ADCS</strong>, <strong>thermal</strong>, <strong>radio</strong>, <strong>power</strong></li>
@@ -246,17 +262,20 @@ telemetry Temperature: F32
   <div>
 
 ```text
-module Pico {
-  active component Thermal {
-    async command SET_HEATER(on: bool)
-    param MAX_TEMP: F32 default 70.0
-    event OverTemp(temp: F32) ...
-    telemetry Temperature: F32
+passive component PicoTempManager {
+  sync input port picoTemperatureGet: picoTemperatureGet
 
-    sync input port run: Svc.Sched
-  }
+  sync command GetPicoTemperature()
+
+  telemetry PicoTemperature: F64
+
+  event PicoTemperature(temperature: F64) \
+    severity activity high \
+    format "Pico Temperature: {} °C"
 }
 ```
+
+<p class="mt-1 text-xs opacity-60">Simplified from: <a href="https://github.com/Open-Source-Space-Foundation/proves-core-reference/blob/main/PROVESFlightControllerReference/Components/Drv/PicoTempManager/PicoTempManager.fpp">PicoTempManager.fpp</a></p>
 
   </div>
 </div>
@@ -264,13 +283,15 @@ module Pico {
 <!--
 - Components are how we segment the software.
 - Each one can be built and tested on its own.
+- PicoTempManager is a driver component: it owns one sensor and nothing else.
+- Passive components have no thread; they run on whoever calls them.
 -->
 
 ---
 
 # Ports
 
-<div class="grid grid-cols-2 gap-4">
+<div class="grid grid-cols-[2fr_3fr] gap-4">
   <div>
     <ul>
       <li>Typed <strong>inputs</strong> and <strong>outputs</strong> of a component</li>
@@ -282,14 +303,16 @@ module Pico {
   <div>
 
 ```text
-port TempRead(celsius: F32)
+port picoTemperatureGet(ref condition: Fw.Success) -> F64
 
-active component Thermal {
-  output port heaterOn: Drv.GpioWrite
+passive component ThermalManager {
   sync input port run: Svc.Sched
-  async input port tempIn: TempRead
+  output port faceTempGet: [5] Drv.temperatureGet
+  output port picoTempGet: Drv.picoTemperatureGet
 }
 ```
+
+<p class="mt-1 text-xs opacity-60">Simplified from: <a href="https://github.com/Open-Source-Space-Foundation/proves-core-reference/blob/main/PROVESFlightControllerReference/Components/ThermalManager/ThermalManager.fpp">ThermalManager.fpp</a></p>
 
   </div>
 </div>
@@ -297,13 +320,15 @@ active component Thermal {
 <!--
 - Ports define a component's contract.
 - Because components only see ports, you can swap a real sensor for a simulated one.
+- ThermalManager doesn't know what a TMP112 or the Pico is. It only knows it has ports that return a temperature.
+- Port arrays: one output port per face / battery cell sensor.
 -->
 
 ---
 
 # Topologies
 
-<div class="grid grid-cols-2 gap-4">
+<div class="grid grid-cols-[2fr_3fr] gap-4">
   <div>
     <ul>
       <li>Declare which <strong>instances</strong> exist</li>
@@ -315,17 +340,16 @@ active component Thermal {
   <div>
 
 ```text
-topology Pico {
-  instance tempSensor
-  instance thermal
-  instance heater
+instance thermalManager
+instance picoTempManager
 
-  connections Thermal {
-    tempSensor.reading -> thermal.tempIn
-    thermal.heaterOn -> heater.gpioWrite
-  }
+connections thermalManager {
+  thermalManager.faceTempGet[0] -> tmp112Face0.temperatureGet
+  thermalManager.picoTempGet -> picoTempManager.picoTemperatureGet
 }
 ```
+
+<p class="mt-1 text-xs opacity-60">Simplified from: <a href="https://github.com/Open-Source-Space-Foundation/proves-core-reference/blob/main/PROVESFlightControllerReference/ReferenceDeployment/Top/topology.fpp">topology.fpp</a></p>
 
   </div>
 </div>
@@ -338,24 +362,30 @@ topology Pico {
 
 # Rate Groups
 
-<div class="grid grid-cols-2 gap-4">
+<div class="grid grid-cols-[2fr_3fr] gap-4">
   <div>
     <ul>
       <li>The spacecraft's <strong>main loop</strong></li>
       <li>A timer ticks the rate group driver</li>
       <li>Each rate group calls its members' <code>run</code> port in order</li>
-      <li>e.g. 10 Hz for ADCS, 1 Hz for thermal</li>
+      <li>PROVES runs <strong>50 Hz</strong> (detumble), <strong>10 Hz</strong> (comms, sequencers) and <strong>1 Hz</strong> (thermal, power, ADCS)</li>
     </ul>
   </div>
   <div>
 
 ```text
 connections RateGroups {
-  rateGroupDriver.CycleOut[0] -> rateGroup1Hz.CycleIn
-  rateGroup1Hz.RateGroupMemberOut[0] -> thermal.run
-  rateGroup1Hz.RateGroupMemberOut[1] -> telemSend.run
+  timer.CycleOut -> rateGroupDriver.CycleIn
+
+  rateGroupDriver.CycleOut[0] -> rateGroup50Hz.CycleIn
+  rateGroup50Hz.RateGroupMemberOut[0] -> detumbleManager.run
+
+  rateGroupDriver.CycleOut[2] -> rateGroup1Hz.CycleIn
+  rateGroup1Hz.RateGroupMemberOut[0] -> thermalManager.run
 }
 ```
+
+<p class="mt-1 text-xs opacity-60">Simplified from: <a href="https://github.com/Open-Source-Space-Foundation/proves-core-reference/blob/main/PROVESFlightControllerReference/ReferenceDeployment/Top/topology.fpp">topology.fpp</a></p>
 
   </div>
 </div>
@@ -363,6 +393,7 @@ connections RateGroups {
 <!--
 - Rate groups define the main loop.
 - Fast loops for things that need it, slow loops for everything else.
+- Once a second, thermalManager.run polls every temperature sensor through its ports, including the Pico.
 -->
 
 ---
