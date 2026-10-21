@@ -26,6 +26,30 @@ Write flight software for real spacecraft with F´
 
 ---
 
+# Agenda
+
+<div class="grid grid-cols-2 gap-8 text-lg">
+  <ol>
+    <li>Who am I?</li>
+    <li>Our software is in space</li>
+    <li>F´ and the FPP modeling language</li>
+    <li>Input: commands &amp; parameters</li>
+    <li>Output: events &amp; telemetry</li>
+  </ol>
+  <ol start="6">
+    <li>Components, ports &amp; topologies</li>
+    <li>Rate groups</li>
+    <li>Demo: pico thermal in the GDS</li>
+    <li>Where to go next</li>
+  </ol>
+</div>
+
+<!--
+- Quick roadmap of the next 20 minutes.
+-->
+
+---
+
 # Who Am I?
 
 <div class="grid grid-cols-2 gap-4">
@@ -93,7 +117,7 @@ Write flight software for real spacecraft with F´
       <li>Open source flight software framework from <strong>NASA JPL</strong></li>
       <li>Flew on the <strong>Ingenuity</strong> Mars helicopter</li>
       <li>You model the system in <strong>FPP</strong>, write behavior in <strong>C++</strong></li>
-      <li>The rest of this talk: the six ideas you need to read an F´ project</li>
+      <li>The rest of this talk: the ideas you need to read an F´ project</li>
     </ul>
   </div>
   <div>
@@ -105,6 +129,47 @@ Write flight software for real spacecraft with F´
 <!--
 - Jump right into F Prime.
 - FPP generates the C++ scaffolding; you fill in the handlers.
+-->
+
+---
+
+# FPP: The F´ Modeling Language
+
+<div class="grid grid-cols-2 gap-4">
+  <div>
+    <ul>
+      <li>You <strong>describe</strong> the system in <code>.fpp</code> files: components, ports, commands, telemetry, topologies</li>
+      <li>The build turns FPP into C++ <strong>autocode</strong>: <code>*Ac.hpp</code> / <code>*Ac.cpp</code> base classes</li>
+      <li>Autocode handles queues, threads, serialization and port wiring. <strong>Never edit it</strong></li>
+      <li>You subclass the base class and write only the <strong>handlers</strong></li>
+      <li>FPP also generates the <strong>dictionary</strong> the GDS uses to decode telemetry</li>
+    </ul>
+  </div>
+  <div>
+
+```text
+Thermal.fpp  ──fpp──▶  ThermalComponentAc.hpp/.cpp  (generated)
+                              ▲ inherits
+                       Thermal.hpp/.cpp           (you write)
+```
+
+```cpp
+void Thermal::SET_HEATER_cmdHandler(
+    FwOpcodeType opCode, U32 cmdSeq, bool on) {
+  this->m_heaterOn = on;
+  this->cmdResponse_out(opCode, cmdSeq,
+                        Fw::CmdResponse::OK);
+}
+```
+
+  </div>
+</div>
+
+<!--
+- FPP is a modeling language, not a programming language: it declares structure.
+- fprime-util generate / build runs the FPP tools; the generated files end in "Ac" for autocode.
+- fprime-util impl stubs out the handler files for you to fill in.
+- Every command, port and event you declare becomes a method you implement or call.
 -->
 
 ---
@@ -220,7 +285,7 @@ module Pico {
 port TempRead(celsius: F32)
 
 active component Thermal {
-  output port heaterOn: Fw.Logic
+  output port heaterOn: Drv.GpioWrite
   sync input port run: Svc.Sched
   async input port tempIn: TempRead
 }
@@ -257,7 +322,7 @@ topology Pico {
 
   connections Thermal {
     tempSensor.reading -> thermal.tempIn
-    thermal.heaterOn -> heater.set
+    thermal.heaterOn -> heater.gpioWrite
   }
 }
 ```
@@ -318,6 +383,30 @@ Commands up · Events &amp; telemetry down
 
 ---
 
+# What We Covered
+
+<div class="grid grid-cols-2 gap-8 text-lg">
+  <ol>
+    <li>Who am I?</li>
+    <li>Our software is in space</li>
+    <li>F´ and the FPP modeling language</li>
+    <li>Input: commands &amp; parameters</li>
+    <li>Output: events &amp; telemetry</li>
+  </ol>
+  <ol start="6">
+    <li>Components, ports &amp; topologies</li>
+    <li>Rate groups</li>
+    <li>Demo: pico thermal in the GDS</li>
+    <li>Where to go next</li>
+  </ol>
+</div>
+
+<!--
+- Recap before next steps. Everything here is linked on the next slide.
+-->
+
+---
+
 # Where to Go Next
 
 <div class="grid grid-cols-2 gap-6 text-sm">
@@ -330,6 +419,7 @@ Commands up · Events &amp; telemetry down
     <h3 class="mt-4">Learn F´</h3>
     <ul>
       <li><a href="https://fprime.jpl.nasa.gov/latest/docs/tutorials/">F´ tutorials</a></li>
+      <li><a href="https://nasa.github.io/fpp/fpp-users-guide.html">FPP user's guide</a></li>
       <li><a href="https://fprime.jpl.nasa.gov/overview/powerful-swa/">F´ architecture overview</a></li>
       <li><a href="https://fprime.jpl.nasa.gov/latest/docs/user-manual/overview/03-port-comp-top/">Ports, components &amp; topologies</a></li>
       <li><a href="https://fprime.jpl.nasa.gov/latest/docs/user-manual/overview/04-cmd-evt-chn-prm/">Commands, events, channels &amp; parameters</a></li>
