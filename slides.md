@@ -310,16 +310,16 @@ passive component PicoTempManager {
   <div>
 
 ```text
+# PicoTempManager.fpp
 port picoTemperatureGet(ref condition: Fw.Success) -> F64
+sync input port picoTemperatureGet: picoTemperatureGet
 
-passive component ThermalManager {
-  sync input port run: Svc.Sched
-  output port faceTempGet: [5] Drv.temperatureGet
-  output port picoTempGet: Drv.picoTemperatureGet
-}
+# ThermalManager.fpp
+sync input port run: Svc.Sched
+output port picoTempGet: Drv.picoTemperatureGet
 ```
 
-<p class="mt-1 text-xs opacity-60">Simplified from: <a href="https://github.com/Open-Source-Space-Foundation/proves-core-reference/blob/main/PROVESFlightControllerReference/Components/ThermalManager/ThermalManager.fpp">ThermalManager.fpp</a></p>
+<p class="mt-1 text-xs opacity-60">Simplified from: <a href="https://github.com/Open-Source-Space-Foundation/proves-core-reference/blob/main/PROVESFlightControllerReference/Components/Drv/PicoTempManager/PicoTempManager.fpp">PicoTempManager.fpp</a> · <a href="https://github.com/Open-Source-Space-Foundation/proves-core-reference/blob/main/PROVESFlightControllerReference/Components/ThermalManager/ThermalManager.fpp">ThermalManager.fpp</a></p>
 
   </div>
 </div>
@@ -327,8 +327,8 @@ passive component ThermalManager {
 <!--
 - Ports define a component's contract.
 - Because components only see ports, you can swap a real sensor for a simulated one.
-- ThermalManager doesn't know what a TMP112 or the Pico is. It only knows it has ports that return a temperature.
-- Port arrays: one output port per face / battery cell sensor.
+- The port type is declared once, then used on both sides: PicoTempManager receives it as an input, ThermalManager calls it as an output.
+- ThermalManager doesn't know what the Pico is. It only knows it has a port that returns a temperature.
 -->
 
 ---
