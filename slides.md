@@ -155,17 +155,22 @@ PicoTempManagerComponentAc.cpp   (generated)
 PicoTempManager.cpp              (you write)
 ```
 
-```cpp
-void PicoTempManager::GetPicoTemperature_cmdHandler(
-    FwOpcodeType opCode, U32 cmdSeq) {
-  F64 temperature = this->getPicoTemperature();
-  this->log_ACTIVITY_HI_PicoTemperature(temperature);
-  this->cmdResponse_out(opCode, cmdSeq,
-                        Fw::CmdResponse::OK);
+```text
+passive component PicoTempManager {
+  sync command GetPicoTemperature()
+  telemetry PicoTemperature: F64
 }
 ```
 
-<p class="mt-1 text-xs opacity-60">Simplified from: <a href="https://github.com/Open-Source-Space-Foundation/proves-core-reference/blob/main/PROVESFlightControllerReference/Components/Drv/PicoTempManager/PicoTempManager.cpp">PicoTempManager.cpp</a></p>
+```cpp
+// PicoTempManagerComponentAc.hpp (generated)
+class PicoTempManagerComponentBase {
+  // You implement this
+  virtual void GetPicoTemperature_cmdHandler(FwOpcodeType, U32) = 0;
+  // You call this
+  void tlmWrite_PicoTemperature(F64 arg);
+};
+```
 
   </div>
 </div>
