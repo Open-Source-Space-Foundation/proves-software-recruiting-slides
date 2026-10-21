@@ -28,30 +28,6 @@ Write flight software for real spacecraft with F´
 
 ---
 
-# Agenda
-
-<div class="grid grid-cols-2 gap-8 text-lg">
-  <ol>
-    <li>Who am I?</li>
-    <li>Our software is in space</li>
-    <li>F´ and the FPP modeling language</li>
-    <li>Input: commands &amp; parameters</li>
-    <li>Output: events &amp; telemetry</li>
-  </ol>
-  <ol start="6">
-    <li>Components, ports &amp; topologies</li>
-    <li>Rate groups</li>
-    <li>Demo: pico thermal in the GDS</li>
-    <li>Where to go next</li>
-  </ol>
-</div>
-
-<!--
-- Quick roadmap of the next 20 minutes.
--->
-
----
-
 # Who Am I?
 
 <div class="grid grid-cols-2 gap-4">
@@ -114,12 +90,35 @@ layout: center
 class: text-center
 ---
 
-# 7 Minutes of Terror
+# Why I Got Into Space
 
 <Youtube id="Ki_Af_o9Q9s" width="720" height="405" />
 
 <!--
 - Play the video to get folks hyped.
+-->
+
+---
+
+# Agenda
+
+<div class="grid grid-cols-2 gap-8 text-lg">
+  <ol>
+    <li>F´ and the FPP modeling language</li>
+    <li>Input: commands &amp; parameters</li>
+    <li>Output: events &amp; telemetry</li>
+    <li>Components, ports &amp; topologies</li>
+  </ol>
+  <ol start="5">
+    <li>Rate groups</li>
+    <li>Demo: pico thermal in the GDS</li>
+    <li>Where to go next</li>
+    <li>Questions</li>
+  </ol>
+</div>
+
+<!--
+- Quick roadmap of the next 20 minutes.
 -->
 
 ---
@@ -434,30 +433,6 @@ Commands up · Events &amp; telemetry down
 
 ---
 
-# What We Covered
-
-<div class="grid grid-cols-2 gap-8 text-lg">
-  <ol>
-    <li>Who am I?</li>
-    <li>Our software is in space</li>
-    <li>F´ and the FPP modeling language</li>
-    <li>Input: commands &amp; parameters</li>
-    <li>Output: events &amp; telemetry</li>
-  </ol>
-  <ol start="6">
-    <li>Components, ports &amp; topologies</li>
-    <li>Rate groups</li>
-    <li>Demo: pico thermal in the GDS</li>
-    <li>Where to go next</li>
-  </ol>
-</div>
-
-<!--
-- Recap before next steps. Everything here is linked on the next slide.
--->
-
----
-
 # Where to Go Next
 
 <div class="grid grid-cols-2 gap-6 text-sm">
@@ -491,6 +466,28 @@ Commands up · Events &amp; telemetry down
 - Come to the software meeting.
 - Work through the F Prime tutorials before you show up if you can.
 - These slides are the handout: every link here is clickable.
+-->
+
+---
+
+# What We Covered
+
+<div class="grid grid-cols-2 gap-8 text-lg">
+  <ol>
+    <li>F´ and the FPP modeling language</li>
+    <li>Input: commands &amp; parameters</li>
+    <li>Output: events &amp; telemetry</li>
+    <li>Components, ports &amp; topologies</li>
+  </ol>
+  <ol start="5">
+    <li>Rate groups</li>
+    <li>Demo: pico thermal in the GDS</li>
+    <li>Where to go next</li>
+  </ol>
+</div>
+
+<!--
+- Recap before next steps. Everything here is linked on the previous slide.
 -->
 
 ---
