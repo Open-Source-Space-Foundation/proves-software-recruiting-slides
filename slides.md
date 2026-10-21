@@ -57,6 +57,34 @@ Write flight software for real spacecraft with F´
 
 ---
 
+# Our Software Is in Space
+
+<div class="grid grid-cols-2 gap-4">
+  <div>
+    <ul>
+      <li><strong>PROVES Five</strong>: 4 satellites deployed from the ISS on <strong>July 2, 2026</strong>, running F´ flight software written at TXST</li>
+      <li>Operated by <strong>Columbia</strong>, <strong>UC Santa Cruz</strong>, <strong>Northeastern</strong> and <strong>Harvard</strong>; platform by Cal Poly Pomona's <strong>Bronco Space</strong></li>
+      <li><strong>PROVES-Maia</strong>: TXST's first satellite, launched <strong>October 13, 2026</strong> on a Falcon 9 (CRS-35)</li>
+    </ul>
+    <div class="mt-4 text-sm">
+      <a href="https://news.txst.edu/research-and-innovation/2026/txst-developed-flight-software-satellites.html">TXST-developed flight software powers satellites deployed from the ISS</a><br>
+      <a href="https://news.txst.edu/research-and-innovation/2026/txst-launches-first-satellite-into-space.html">TXST's first-ever satellite launches into space</a>
+    </div>
+  </div>
+  <div>
+    <img alt="Long exposure of the Falcon 9 launch carrying PROVES-Maia" class="rounded-lg shadow-lg" src="./images/maia_launch_falcon9.jpg">
+    <p class="mt-1 text-xs opacity-60">Photo: NASA/John Kraus</p>
+  </div>
+</div>
+
+<!--
+- PROVES Five satellites launched to the ISS on CRS-35 on April 11 and deployed July 2.
+- Within days of deployment we made contact with two spacecraft and sent our first confirmed command.
+- Maia carries MOSAIC and a TXST-designed radiation sensor. Students will command it from the ground station in San Marcos.
+-->
+
+---
+
 # F´ (F Prime)
 
 <div class="grid grid-cols-2 gap-4">
@@ -69,7 +97,8 @@ Write flight software for real spacecraft with F´
     </ul>
   </div>
   <div>
-    <img alt="5 flight satellites during integration prep" class="rounded-lg shadow-lg" style="max-height:400px" src="./images/5_flight_satellites_during_integration_prep.jpeg">
+    <img alt="F Prime deployments used on the Ingenuity Mars Helicopter" class="rounded-lg shadow-lg bg-white" src="./images/fprime_ingenuity_deployment.png">
+    <p class="mt-1 text-xs opacity-60">Ingenuity's F´ deployments. Source: <a href="https://fprime.jpl.nasa.gov/overview/powerful-swa/">fprime.jpl.nasa.gov</a></p>
   </div>
 </div>
 
@@ -147,6 +176,7 @@ telemetry Temperature: F32
       <li>Owns its commands, parameters, events and telemetry</li>
       <li>Never calls another component directly</li>
     </ul>
+    <img alt="Diagram showing elements of a component" class="mt-4 mx-auto" style="max-height:220px" src="./images/fprime_components.png">
   </div>
   <div>
 
@@ -182,6 +212,7 @@ module Pico {
       <li>The only way components talk to each other</li>
       <li><strong>sync</strong>: runs on the caller's thread · <strong>async</strong>: queued</li>
     </ul>
+    <img alt="Diagram showing location of ports in a component" class="mt-4 mx-auto" style="max-height:220px" src="./images/fprime_ports.png">
   </div>
   <div>
 
@@ -214,6 +245,7 @@ active component Thermal {
       <li>Wire <strong>output ports</strong> to <strong>input ports</strong></li>
       <li>The whole spacecraft on one page</li>
     </ul>
+    <img alt="Diagram showing the elements of a topology" class="mt-4 mx-auto" style="max-height:220px" src="./images/fprime_topologies.png">
   </div>
   <div>
 
@@ -288,15 +320,36 @@ Commands up · Events &amp; telemetry down
 
 # Where to Go Next
 
-<ul>
-  <li><strong>Software Meeting</strong>: Thursdays at 9pm on Discord (scan the QR code)</li>
-  <li><strong>F´ tutorials</strong>: <a href="https://fprime.jpl.nasa.gov/latest/tutorials/">fprime.jpl.nasa.gov/latest/tutorials</a></li>
-  <li><strong>PROVES flight software</strong>: <a href="https://github.com/Open-Source-Space-Foundation/proves-core-reference">github.com/Open-Source-Space-Foundation/proves-core-reference</a></li>
-</ul>
+<div class="grid grid-cols-2 gap-6 text-sm">
+  <div>
+    <h3>Join us</h3>
+    <ul>
+      <li><strong>Software Meeting</strong>: Thursdays at 9pm on Discord (scan the QR code)</li>
+      <li><a href="https://github.com/Open-Source-Space-Foundation/proves-core-reference">PROVES flight software (proves-core-reference)</a></li>
+    </ul>
+    <h3 class="mt-4">Learn F´</h3>
+    <ul>
+      <li><a href="https://fprime.jpl.nasa.gov/latest/docs/tutorials/">F´ tutorials</a></li>
+      <li><a href="https://fprime.jpl.nasa.gov/overview/powerful-swa/">F´ architecture overview</a></li>
+      <li><a href="https://fprime.jpl.nasa.gov/latest/docs/user-manual/overview/03-port-comp-top/">Ports, components &amp; topologies</a></li>
+      <li><a href="https://fprime.jpl.nasa.gov/latest/docs/user-manual/overview/04-cmd-evt-chn-prm/">Commands, events, channels &amp; parameters</a></li>
+    </ul>
+  </div>
+  <div>
+    <h3>Read more</h3>
+    <ul>
+      <li><a href="https://news.txst.edu/research-and-innovation/2026/txst-developed-flight-software-satellites.html">TXST-developed flight software powers satellites deployed from the ISS</a></li>
+      <li><a href="https://news.txst.edu/research-and-innovation/2026/txst-launches-first-satellite-into-space.html">TXST's first-ever satellite launches into space</a></li>
+      <li><a href="https://www.youtube.com/watch?v=Ki_Af_o9Q9s">7 Minutes of Terror (NASA JPL)</a></li>
+    </ul>
+    <img alt="Students assembling PROVES-Maia in a clean room" class="rounded-lg shadow-lg mt-4" style="max-height:180px" src="./images/maia_team.jpg">
+  </div>
+</div>
 
 <!--
 - Come to the software meeting.
 - Work through the F Prime tutorials before you show up if you can.
+- These slides are the handout: every link here is clickable.
 -->
 
 ---
