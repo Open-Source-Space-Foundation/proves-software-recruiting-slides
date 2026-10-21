@@ -116,7 +116,7 @@ Write flight software for real spacecraft with F´
     <ul>
       <li>Open source flight software framework from <strong>NASA JPL</strong></li>
       <li>Flew on the <strong>Ingenuity</strong> Mars helicopter</li>
-      <li>You model the system in <strong>FPP</strong>, write behavior in <strong>C++</strong></li>
+      <li>Model the system in <strong>FPP</strong>, write behavior in <strong>C++</strong></li>
       <li>The rest of this talk: the ideas you need to read an F´ project</li>
     </ul>
   </div>
@@ -139,7 +139,7 @@ Write flight software for real spacecraft with F´
   <div>
     <ul>
       <li>You <strong>describe</strong> the system in <code>.fpp</code> files: components, ports, commands, telemetry, topologies</li>
-      <li>The build turns FPP into C++ <strong>autocode</strong>: <code>*Ac.hpp</code> / <code>*Ac.cpp</code> base classes</li>
+      <li>The build turns FPP into <span class="whitespace-nowrap">C++</span> <strong>autocode</strong>: <code>*Ac.hpp</code> / <code>*Ac.cpp</code> base classes</li>
       <li>Autocode handles queues, threads, serialization and port wiring. <strong>Never edit it</strong></li>
       <li>You subclass the base class and write only the <strong>handlers</strong></li>
       <li>FPP also generates the <strong>dictionary</strong> the GDS uses to decode telemetry</li>
@@ -459,7 +459,7 @@ Commands up · Events &amp; telemetry down
   <div>
     <h3>Read more</h3>
     <ul>
-      <li><a href="https://news.txst.edu/research-and-innovation/2026/txst-developed-flight-software-satellites.html">TXST-developed flight software powers satellites deployed from the ISS</a></li>
+      <li><a href="https://news.txst.edu/research-and-innovation/2026/txst-developed-flight-software-satellites.html">PROVES Five satellites deployed from the ISS</a></li>
       <li><a href="https://news.txst.edu/research-and-innovation/2026/txst-launches-first-satellite-into-space.html">TXST's first-ever satellite launches into space</a></li>
       <li><a href="https://www.youtube.com/watch?v=Ki_Af_o9Q9s">7 Minutes of Terror (NASA JPL)</a></li>
     </ul>
